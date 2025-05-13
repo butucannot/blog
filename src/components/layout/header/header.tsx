@@ -1,18 +1,23 @@
 export function Header() {
 
     return (
-        <header className="flex items-center justify-between p-4 bg-[#D9D9D9]">
-        <div className="text-lg font-bold">My Website</div>
+        <header className="flex items-center justify-between p-4 bg-[#D9D9D9] px-[20%]">
+        <div className="text-[36px]">LOGO</div>
         <nav>
-            <ul className="flex space-x-4">
+            <ul className="flex gap-[150px] space-x-4 text-[22px]">
             <li>
                 <a href="/" className="hover:text-gray-400">
-                Home
+                HOME
                 </a>
             </li>
             <li>
                 <a href="/blog" className="hover:text-gray-400">
-                Blog
+                BLOG
+                </a>
+            </li>
+             <li>
+                <a href="/about-us" className="hover:text-gray-400">
+                ABOUT US
                 </a>
             </li>
             </ul>
