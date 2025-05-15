@@ -22,18 +22,21 @@ const geistMono = Geist_Mono({
 
 const posts = [
   {
+    id: 1,
     name: "Who is it",
     img: "/mujik.png",
     created_at: "2025.01.03",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis mattis nunc, sed faucibus nibh feugiat at. Phasellus molestie lectus odio, dignissim tempor libero pellentesque vel. Vivamus a erat vel massa scelerisque tincidunt. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce cursus diam eget purus pretium, eu tempor lacus finibus. Duis interdum sit amet lorem ac mollis. Aliquam eu faucibus ligula. Phasellus ultricies dictum porta. Vivamus non dapibus nunc. Aenean commodo sapien non tincidunt bibendum.",
   },
   {
+    id: 2,
     name: "who is it",
     img: "/1.png",
     created_at: "2025.01.03",
     content: "some lopng text here",
   },
   {
+    id: 3,
     name: "who is it",
     img: "/2.png",
     created_at: "2025.01.03",
