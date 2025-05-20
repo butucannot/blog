@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import "./pizdec.css";
 
@@ -22,7 +21,7 @@ export default function Fuck() {
     setResult(newResult);
   };
 
-  return (  
+  return (
     <main>
       <div>
         <input
