@@ -10,6 +10,11 @@ export default function Blog({
   const posts: any = JSON.parse(localStorage.getItem("posts") || "[]");
   const defaultPage = 1;
   const itemsPerPage = 6;
+  const totalPages: number = Math.ceil(posts.length / itemsPerPage);
+  const pageNumbers: number[] = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
   const page: number = Number(searchParams?.page ?? defaultPage);
   if (page < 1 || page > posts.length / itemsPerPage) console.log(posts.length);
   return (
@@ -57,22 +62,19 @@ export default function Blog({
               />
             </svg>
           </button>
-          {Array.from(
-            { length: Math.ceil(posts.length / itemsPerPage) },
-            (_, index) => (
-              <button
-                key={index}
-                className={`w-14 h-14 flex items-center justify-center rounded-2xl  ${
-                  page === index + 1
-                    ? "bg-[#FF854C] text-white"
-                    : "bg-white border border-gray-200"
-                }`}
-                onClick={() => router.push(`/blog?page=${index + 1}`)}
-              >
-                {index + 1}
-              </button>
-            )
-          )}
+          {pageNumbers.map((obj: any, i: any) => (
+            <button
+              key={i}
+              onClick={() => router.push(`/blog?page=${i + 1}`)}
+              className={`w-14 h-14 flex items-center justify-center rounded-2xl  ${
+                page === i + 1
+                  ? "bg-[#FF854C] text-white"
+                  : "bg-white border border-gray-200"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
 
           <button
             onClick={() => router.push(`/blog?page=${page + 1}`)}

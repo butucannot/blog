@@ -47,44 +47,72 @@ const posts = [
   },{
     id: 4,
     name: "DB for Myalik Birthday",
-    img: "/2.png",
+    img: "/boss.png",
     created_at: "2025.01.03",
     content: "some lopng text here",
     isLiked: false
   },{
     id: 5,
     name: "DB for Myalik Birthday",
-    img: "/2.png",
+    img: "/priroda.jpg",
     created_at: "2025.01.03",
     content: "some lopng text here",
     isLiked: false
   },{
     id: 6,
     name: "DB for Myalik Birthday",
-    img: "/2.png",
+    img: "/nejer.jpg",
     created_at: "2025.01.03",
     content: "some lopng text here",
     isLiked: false
   },{
     id: 7,
     name: "DB for Myalik Birthday",
-    img: "/2.png",
+    img: "/drive.jpg",
     created_at: "2025.01.03",
     content: "some lopng text here",
     isLiked: false
   },{
     id: 8,
     name: "DB for Myalik Birthday",
-    img: "/2.png",
+    img: "/ukraine.jpg",
     created_at: "2025.01.03",
     content: "some lopng text here",
     isLiked: false
   },{
     id: 9,
     name: "DB for Myalik Birthday",
-    img: "/2.png",
+    img: "/Artur.png",
     created_at: "2025.01.03",
     content: "some lopng text here",
+    isLiked: false
+  },{
+    id: 10,
+    name: "DB for Myalik Birthday",
+    img: "/Artur2.0.jpg",
+    created_at: "2025.01.03",
+    content: "some lopng text here",
+    isLiked: false
+  },{
+    id: 11,
+    name: "DB for Myalik Birthday",
+    img: "/power.jpg",
+    created_at: "2025.01.03",
+    content: "some lopng text here",
+    isLiked: false
+  },{
+    id: 12,
+    name: "DB for Myalik Birthday",
+    img: "/maks.jpg",
+    created_at: "2025.01.03",
+    content: "some lopng text here",
+    isLiked: false
+  },{
+    id: 13,
+    name: "DB for Myalik Birthday",
+    img: "/vipbarack.jpeg",
+    created_at: "2025.01.03",
+    content: "Hello",
     isLiked: false
   },
 ];
