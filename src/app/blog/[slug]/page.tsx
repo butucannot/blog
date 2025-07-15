@@ -1,50 +1,78 @@
 "use client";
 
-export default async function Post({ params }: any) {
-  const posts: any = JSON.parse(localStorage.getItem("posts") || "[]");
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-  const { slug } = await params;
-  const post = posts.find((obj: any) => obj.id == slug);
+type Data = {
+  id: number;
+  name: string;
+  image: string;
+  content: string;
+  is_liked: boolean;
+  created_at: string | null;
+  updated_at: string | null;
+};
 
-  const btnLike = function (e: React.MouseEvent<SVGSVGElement>) {
-    post.isLiked = !post.isLiked;
-    localStorage.setItem("posts", JSON.stringify(posts));
-    const svg = e.currentTarget;
-    if (post.isLiked === true) {
-      svg.setAttribute("fill", "#FF0000");
-    } else if (post.isLiked === false) {
-      svg.setAttribute("fill", "#FFFFFF");
+export default function Post({ params }: { params: { slug: string } }) {
+  const [post, setPost] = useState<Data | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    async function fetchPost() {
+      try {
+        const res = await fetch(`http://localhost/api/posts/${params.slug}`, {
+          cache: "no-store",
+        });
+        if (!res.ok) throw new Error(`Ошибка сети: ${res.status}`);
+        const data: Data = await res.json();
+        setPost(data);
+      } catch (err: any) {
+        setError(err.message || "Ошибка загрузки данных");
+      } finally {
+        setLoading(false);
+      }
     }
-  };
+    fetchPost();
+  }, [params.slug]);
+  
+  async function handleDelete(){
+    if(!confirm("Are you sure that you want to delete this post")) return;
+    try {
+      const res = await fetch(`http://localhost/api/posts/${params.slug}`, {
+        method: "DELETE"
+      });
+      if(!res.ok) {
+        throw new Error(`Error: ${res.status}`)
+      }
+ router.push('/blog'); } 
+      catch (err:any) {
+        alert(err.message || "Can not delete this post")
+      }
+  }
+
+  if (loading) return <main className="p-10 text-white">Загрузка...</main>;
+  if (error) return <main className="p-10 text-red-500">Ошибка: {error}</main>;
+  if (!post) return <main className="p-10 text-white">Пост не найден</main>;
 
   return (
-    
-    <main>
-      <h1 className="text-[#FFFFFF] text-[36px] mb-[20px]">{post.name}</h1>
+    <main className="bg-[#1D0202] text-white p-10 min-h-screen">
+      <h1 className="text-[36px] mb-[20px]">{post.name}</h1>
       <div>
         <img
-          className="rounded-[30px] w-[1200px] h-[300px] mb-[20px]"
-          src={post.img}
+          src={`http://localhost${post.image}`}
+          alt={post.name}
+          className="rounded-[30px] w-[1200px] h-[300px] mb-[20px] object-cover"
         />
       </div>
       <div>
-        <h2 className="text-[#FFFFFF] mb-[20px]">{post.content}</h2>
+        <h2 className="mb-[20px]">{post.content}</h2>
       </div>
       <div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill={post.isLiked === true  ? "#FF0000" : "#FFFFFF"}
-          stroke="#FF0000"
-          version="1.1"
-          id="Capa_1"
-          viewBox="0 0 471.701 471.701"
-          className="w-[30px] cursor-pointer"
-          onClick={btnLike}
-        >
-          <g>
-            <path d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z" />
-          </g>
-        </svg>
+        <button className="mt-4 px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl transition duration-200 cursor-pointer" onClick={handleDelete}>
+          Delete this post
+        </button>
       </div>
     </main>
   );
