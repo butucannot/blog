@@ -1,9 +1,9 @@
-import Image from "next/image";
 
-export default function Home() {
+
+
+export default async function Home() {
+
   return (
-    <>
-    ITS A HOME PAGE
-    </>
+    "boba"
   );
 }

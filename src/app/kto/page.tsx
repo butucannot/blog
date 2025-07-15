@@ -21,7 +21,7 @@ export default function Fuck() {
     setResult(newResult);
   };
 
-  return (  
+  return (
     <main>
       <div>
         <input
