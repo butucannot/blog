@@ -3,66 +3,46 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostStoreRequest;
 use App\Models\Post;
+use App\Services\PostService;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return Post::all();
+    public function __construct(
+        private readonly PostService $postService,
+    )
+    { }
 
+    public function index(): Collection
+    {
+        return $this->postService->all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
-        ]);
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public');
-        }
-        $post = new Post();
-        $post->name = $validated['name'];
-        $post->content = $validated['content'];
-        $post->image = $imagePath ? '/storage/' . $imagePath : null;
-        $post->save();
-        return response()->json(['message' => 'Пост создан']);
+        $post = $this->postService->storeInService($request->validated());
+
+        return ok(['message' => 'Пост создан', 'post' => $post]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        $post = Post::findOrFail($id);
-        return response()->json($post);
+        return response()->json($this->postService->findBy(['id' => $id]));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): void
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
-        $post = Post::findOrFail($id); // а не де slug = ...
-        $post->delete();
+        $this->postService->delete($id);
+
         return response()->json(['message' => 'Deleted']);
     }
 }

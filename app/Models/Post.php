@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'name',
         'image',
@@ -14,5 +16,5 @@ class Post extends Model
         'is_liked',
         'created_at',
     ];
-    use SoftDeletes;
+
 }
